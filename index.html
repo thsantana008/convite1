@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Convite</title>
+
+    <!-- Preparação do site do convite -->
+    <link rel="preconnect" href="https://entrelacosdigitais.com.br">
+    <link rel="dns-prefetch" href="//entrelacosdigitais.com.br">
+    <link rel="prefetch"
+          href="https://entrelacosdigitais.com.br/jessica-e-carlos">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .intro {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        /* Vídeo */
+        #video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        /* Tela branca para a transição */
+        #whiteFade {
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 20;
+
+            transition: opacity 1.2s ease;
+        }
+
+        #whiteFade.active {
+            opacity: 1;
+        }
+
+        /* Evita seleção/acidental no celular */
+        #video,
+        #startButton {
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="intro" id="intro">
+
+        <!--
+            SEU VÍDEO
+            Coloque o arquivo aqui:
+            Convite teste/Video/Convite-verde.mp4
+        -->
+        <video
+            id="video"
+            playsinline
+            preload="auto"
+            muted
+        >
+            <source src="Video/Convite-verde.mp4" type="video/mp4">
+        </video>
+
+        
+
+        <div id="whiteFade"></div>
+
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+        const startButton = document.getElementById("startButton");
+        const whiteFade = document.getElementById("whiteFade");
+        const intro = document.getElementById("intro");
+
+        const conviteURL =
+            "https://entrelacosdigitais.com.br/jessica-e-carlos";
+
+        let started = false;
+
+        video.currentTime = 0;
+video.pause();
+
+        video.addEventListener("click", () => {
+
+    if (started) return;
+
+    started = true;
+
+    // Começa o vídeo
+    video.play().catch(error => {
+        console.error("Não foi possível reproduzir o vídeo:", error);
+    });
+});
+
+        // Quando o vídeo terminar
+        video.addEventListener("ended", () => {
+
+            // Começa o branco
+            whiteFade.classList.add("active");
+
+            // Aguarda o fade terminar
+            setTimeout(() => {
+
+                window.location.href = conviteURL;
+
+            }, 1200);
+        });
+    </script>
+
+</body>
+</html>
